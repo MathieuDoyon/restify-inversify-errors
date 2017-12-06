@@ -1,0 +1,52 @@
+{
+  "name": "test-restify",
+  "version": "0.0.0",
+  "description": "Test",
+  "scripts": {
+    "start": "NODE_ENV=development nodemon --watch src -e ts --exec 'ts-node src/index.ts'",
+    "start:inversify": "NODE_ENV=development nodemon --watch src -e ts --exec 'ts-node src/indexInversify.ts'",
+    "compile": "rm -rf build && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@ssense/framework": "^0.2.4",
+    "@ssense/restify-request-validator": "^1.1.12",
+    "@types/bluebird": "^3.5.18",
+    "@types/bookshelf": "^0.9.6",
+    "@types/config": "0.0.33",
+    "@types/joi": "^10.4.4",
+    "@types/knex": "0.0.62",
+    "@types/pg": "^7.1.5",
+    "@types/ramda": "^0.24.18",
+    "@types/restify": "5.0.6",
+    "@types/restify-errors": "4.3.2",
+    "bluebird": "^3.5.1",
+    "bookshelf": "^0.10.4",
+    "bookshelf-cascade-delete": "^2.0.1",
+    "bookshelf-paranoia": "^0.11.0",
+    "config": "^1.27.0",
+    "graceful-fs": "^4.1.11",
+    "inversify": "4.6.0",
+    "inversify-restify-utils": "3.3.1",
+    "joi": "^13.0.1",
+    "knex": "^0.13.0",
+    "newrelic": "^2.3.1",
+    "node-typechecker": "0.0.8",
+    "pg": "^7.3.0",
+    "ramda": "^0.25.0",
+    "reflect-metadata": "0.1.10",
+    "restify": "6.3.4",
+    "restify-errors": "5.0.0",
+    "restify-swagger-jsdoc": "git+https://github.com/MathieuDoyon/restify-swagger-jsdoc.git#feat/update_restify_6",
+    "typescript": "^2.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.5",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "tslint-microsoft-contrib": "^5.0.1",
+    "tslint-react": "^3.2.0"
+  }
+}
