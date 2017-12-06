@@ -2,15 +2,15 @@
 
 ## Getting Started
 ```
-$ APP_PORT=8080 npm install
+$ npm install
 ```
 
-# Working example without inversify
+### Working example without inversify
 ```
-$ npm start
+$ APP_PORT=8080 npm start
 ```
 
-# NOT Working example with inversify
+### NOT Working example with inversify
 ```
 $ APP_PORT=8081 npm run start:inversify
 ```
