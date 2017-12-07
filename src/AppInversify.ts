@@ -1,11 +1,10 @@
 import { AccessLogger, Logger } from '@ssense/framework';
 import { IConfig } from 'config';
 import { InversifyRestifyServer } from 'inversify-restify-utils';
-import * as config from 'config';
-import * as restify from 'restify';
 // import { Next, Request, Response, Server } from 'restify'; // tslint:disable-line no-duplicate-imports
 // import * as restifySwaggerJsdoc from 'restify-swagger-jsdoc';
 import { kernel } from './Kernel';
+import { sanitizePath } from "./sanitizePath";
 // import knex from './storage/knex';
 
 interface DocumentationOptions {
@@ -15,7 +14,8 @@ interface DocumentationOptions {
 }
 
 export class App {
-    private server: restify.Server;
+
+    private server: any;
     private controllers: {};
     private logger: Logger;
     private accessLogger: AccessLogger;
@@ -24,15 +24,15 @@ export class App {
         this.logger = kernel.get<Logger>('logger');
     }
 
-    public init(): restify.Server {
+    public init() {
         try {
             // initialize the server
             const config = kernel.get<IConfig>('config');
             const serverBuilder = new InversifyRestifyServer(kernel);
             const startRequestId = this.logger.generateRequestId();
 
-            serverBuilder.setConfig((server: restify.Server) => {
-                server.use((req: restify.Request, res: restify.Response, next: restify.Next) => {
+            serverBuilder.setConfig((server) => {
+                server.use((req, res, next) => {
                     // Add middleware to generate request id
                     req.xRequestId =
                         (req.headers['x-request-id'] as string) ||
@@ -44,7 +44,7 @@ export class App {
                 });
 
                 // Load middlewares
-                server.pre(restify.pre.sanitizePath()); // Clean trailing slashes on routes
+                server.pre(sanitizePath()); // Clean trailing slashes on routes
                 // ... other pre and middleware here
             });
 
@@ -53,9 +53,7 @@ export class App {
             this.server.get(
                 '/health',
                 (
-                    req: restify.Request,
-                    res: restify.Response,
-                    next: restify.Next
+                    req, res, next
                 ) => {
                     const memoryUsage: any = process.memoryUsage();
                     memoryUsage.heap_total = memoryUsage.heapTotal;
@@ -80,9 +78,7 @@ export class App {
             this.server.get(
                 '/api',
                 (
-                    req: restify.Request,
-                    res: restify.Response,
-                    next: restify.Next
+                    req, res, next
                 ) => {
                     res.json({ routes: this.server.router.mounts });
                     next();
@@ -95,7 +91,7 @@ export class App {
         }
     }
 
-    public getServer(): restify.Server {
+    public getServer() {
         return this.server;
     }
 }
